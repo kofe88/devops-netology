@@ -1,0 +1,5 @@
+- Terraform: ![Терраформ](tf.png)
+    - Bash: ![bahs](sh.png)
+    - Markdown: ![markdown](md.png)
+    - Yaml: ![Yaml](yaml.png)
+    - Jsonnet: ![Jsonnet](jsonnet.png)
