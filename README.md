@@ -12,15 +12,15 @@
 ## Модуль 1. Введение в DevOps
 
 1.1. [x] [Введение в DevOps](01-intro-01/todo/README.md)
-	 [x] [Решение](01-intro-01/README.md)
+	 [x] [Решение](01-intro-01)
 
 ## Модуль 2. Системы управления версиями
 
 2.1. [x] [Системы контроля версий](02-git-01-vcs/todo/README.md)
-	[x] [Решение](02-git-01-vcs/README.md)
+	[x] [Решение](02-git-01-vcs)
 	
 2.2. [x] [Основы Git](02-git-02-base/todo/README.md)
-	[x] [Решение](02-git-02-base/README.md)
+	[x] [Решение](02-git-02-base)
 	
 2.3. [x] [Ветвления в Git](02-git-03-branching/todo/README.md)
 	[x] [Решение]
