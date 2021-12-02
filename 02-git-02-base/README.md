@@ -4,7 +4,7 @@
 
 ### Задание 1:
 
-* Созданы аккаунты на [gitlab](https://gitlab.com') и [bitbucket](https://bitbucket.org)
+* Созданы аккаунты на [gitlab](https://gitlab.com) и [bitbucket](https://bitbucket.org)
 * Созданы репозитории devops-netology
 * Командой `git remote -v` контролировался каждый шаг добавления удаленных репозиториев
 * Добавлены репозитории `git remote add gitlab https://gitlab.com/kofe88/devops-netology.git` и `git remote add bitbucket git@bitbucket.org:kofe88/devops-netology.git`.
