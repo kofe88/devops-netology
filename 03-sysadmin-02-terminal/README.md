@@ -281,6 +281,12 @@ Jan 17 23:04:17 vagrant systemd[1]: Finished Refresh fwupd metadata and update m
 [1]  + 13896 suspended  tail -f /var/log/syslog
 ```
 
+Затем `bg` чтобы отправить процесс в фон.
+
+Используем `jobs -l` чтобы посмотреть процессы запущенные в фоне.
+
+Выполняем `disown <id>` чтобы отвязать процесс от текущего родителя.
+
 ```bash
 23:05:21 with vagrant in ~ at vagrant took 3s
 ✦ ➜ ps -a
