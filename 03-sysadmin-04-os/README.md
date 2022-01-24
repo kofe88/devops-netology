@@ -879,12 +879,40 @@ bash: fork: retry: Resource temporarily unavailable
 [   47.383827] cgroup: fork rejected by pids controller in /user.slice/user-1000.slice/session-3.scope
 ```
 
-Число процессов указано в ulimit -u:
+Максимальное количество процесов для пользователя `Tasks: 9 (limit: 10158)` :
 
 ```bash
-00:59:15 with vagrant in ~ at vagrant
+05:49:44 with vagrant in ~ at vagrant took 54s
+➜ systemctl status user-1000.slice
+● user-1000.slice - User Slice of UID 1000
+     Loaded: loaded
+    Drop-In: /usr/lib/systemd/system/user-.slice.d
+             └─10-defaults.conf
+     Active: active since Mon 2022-01-24 05:39:20 UTC; 10min ago
+       Docs: man:user@.service(5)
+      Tasks: 9 (limit: 10158)
+     Memory: 37.7M
+     CGroup: /user.slice/user-1000.slice
+             ├─session-3.scope
+             │ ├─  1509 sshd: vagrant [priv]
+             │ ├─  1562 sshd: vagrant@pts/0
+             │ ├─  1563 -zsh
+             │ ├─  1845 bash
+             │ ├─120380 zsh
+             │ ├─120497 systemctl status user-1000.slice
+             │ └─120498 less
+             └─user@1000.service
+               └─init.scope
+                 ├─1525 /lib/systemd/systemd --user
+                 └─1527 (sd-pam)
+```
+
+Так же число процессов указано в ulimit -u:
+
+```bash
+05:49:48 with vagrant in ~ at vagrant
 ➜ ulimit -u
-3571
+15391
 ```
 
 
