@@ -8,11 +8,11 @@
 
 Устанавливаем плагин:
 
-![1](img/img001.png)
+![1](img/img001.PNG)
 
 Регистрируемся и сохраняем пароль:
 
-![2](img/img002.png)
+![2](img/img002.PNG)
 
 ---
 
@@ -22,11 +22,11 @@
 
 До подключения аутентификатора:
 
-![3](img/img003.png)
+![3](img/img003.PNG)
 
 После:
 
-![4](img/img004.png)
+![4](img/img004.PNG)
 
 Пользуюсь [andOTP](https://github.com/andOTP/andOTP)
 
@@ -191,13 +191,13 @@ tcp        LISTEN      0           511                           *:80           
 
 Переходим по адресу `https://somesite.ru:1443/` и видим что соединение не защищено, ругается на сертификат.
 
-![5](img/img005.png)
+![5](img/img005.PNG)
 
-![6](img/img006.png)
+![6](img/img006.PNG)
 
 Что и логично, т.к. он самоподписанный и наш ПК о нем ничего не знает. Нажмем "Дополнительно" и "перейти на сайт":
 
-![7](img/img007.png)
+![7](img/img007.PNG)
 
 ---
 
@@ -485,7 +485,7 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 
 Перебросил через WInSCP на свой пк файл и открыл его в WireShark:
 
-![8](img/img008.png)
+![8](img/img008.PNG)
 
 ---
 
