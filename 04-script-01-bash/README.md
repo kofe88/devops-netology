@@ -44,19 +44,20 @@ done
 
 ### Ваш скрипт:
 
-Потеряна скобка в условии `while` и нету `break`
+Потеряна скобка в условии цикла `while`,нету `else` и в нем `exit` (сначала хотел `break`, но `exit` думаю будет корректнее), а так же можно добавить команду `sleep`, чтобы не спамить запросами и лог не сильно рос.
 
 ```bash
 #!/usr/bin/env bash
-while ((1==1))
+while ((1 == 1))
 do
         curl https://localhost:4757
-        if (($?!=0))
+        if (($? != 0))
         then
                 date >> curl.log
         else
-                break
+                exit
         fi
+        sleep 5
 done
 ```
 
@@ -66,21 +67,21 @@ done
 ### Ваш скрипт:
 ```bash
 #!/usr/bin/env bash
-timeout=1
+timeout=5
 port=80
 declare -i code
 packet=5
 array_ip=("192.168.0.1" "173.194.222.113" "87.250.250.242")
-while ((1==1))
+while ((1 == 1))
 do
         for ip in ${array_ip[@]}
         do
                 echo $ip >> curl.log
                 p=0
-                while (($p<$packet))
+                while (($p < $packet))
                 do
                         code=$(curl --write-out '%{http_code}' --silent --output /dev/null --connect-timeout $timeout http://$ip:$port)
-                        if (($code==0))
+                        if (($code == 0))
                         then
                                 echo $(date) "not responding" >> curl.log
                         else
@@ -100,23 +101,26 @@ done
 Необходимо дописать скрипт из предыдущего задания так, чтобы он выполнялся до тех пор, пока один из узлов не окажется недоступным. Если любой из узлов недоступен - IP этого узла пишется в файл error, скрипт прерывается.
 
 ### Ваш скрипт:
+
+В скрипте поменял третий адрес на `87.250.252.242` чтобы была ошибка.
+
 ```bash
 #!/usr/bin/env bash
-timeout=1
+timeout=5
 port=80
 declare -i code
 packet=5
 array_ip=("192.168.0.1" "173.194.222.113" "87.250.252.242")
-while ((1==1))
+while ((1 == 1))
 do
         for ip in ${array_ip[@]}
         do
                 echo $ip >> curl.log
                 p=0
-                while (($p<$packet))
+                while (($p < $packet))
                 do
                         code=$(curl --write-out '%{http_code}' --silent --output /dev/null --connect-timeout $timeout http://$ip:$port)
-                        if (($code==0))
+                        if (($code == 0))
                         then
                                 echo $(date) "not responding" >> curl.log
                                 echo $ip > error
