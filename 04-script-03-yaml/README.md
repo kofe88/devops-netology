@@ -120,8 +120,8 @@ drive.google.com - 64.233.165.193 - HTTP code: 301
 
 ### json-файл(ы), который(е) записал ваш скрипт:
 ```json
-{"drive.google.com": "64.233.165.193", "mail.google.com": "142.251.1.17", "google.com": "173.194.221.102"}```
-
+{"drive.google.com": "64.233.165.193", "mail.google.com": "142.251.1.17", "google.com": "173.194.221.102"}
+```
 ### yml-файл(ы), который(е) записал ваш скрипт:
 ```yaml
 drive.google.com: 64.233.165.193
