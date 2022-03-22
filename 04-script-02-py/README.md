@@ -246,6 +246,7 @@ timeout = "10"
 hosts = ['drive.google.com','mail.google.com','google.com']
 hosts_ip =['','','']
 first = True
+error = False
 while True:
     now = datetime.now()
     print('\n')
@@ -260,34 +261,41 @@ while True:
                 print('\033[32m' + host + ' - ' + now_ip + ' - HTTP code: ' + code)
             else:
                 print('\033[31m[ERROR]' + host + ' IP mistmatch: ' + hosts_ip[index] + ' ' + now_ip + ' - HTTP code: ' + code)
-                sys.exit(0)
+                error = True
         else:
             print('\033[32m' + host + ' - ' + now_ip + ' - HTTP code: ' + code)
         hosts_ip[index] = now_ip
+    if error:
+        sys.exit(0)
     first = False
     time.sleep(5)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```bash
-22:42:31 with vagrant in ~/netology/0402 at vagrant
+23:41:04 with vagrant in ~/netology/0402 at vagrant
 ➜ python3 4.py
 
 
-21/03/2022 22:42:48
+21/03/2022 23:41:07
 drive.google.com - 64.233.165.193 - HTTP code: 301
-mail.google.com - 142.251.1.83 - HTTP code: 301
-google.com - 173.194.221.101 - HTTP code: 301
+mail.google.com - 142.251.1.19 - HTTP code: 301
+google.com - 173.194.221.100 - HTTP code: 301
 
 
-21/03/2022 22:42:53
+21/03/2022 23:41:12
 drive.google.com - 64.233.165.193 - HTTP code: 301
-mail.google.com - 142.251.1.83 - HTTP code: 301
-google.com - 173.194.221.101 - HTTP code: 301
+mail.google.com - 142.251.1.19 - HTTP code: 301
+google.com - 173.194.221.100 - HTTP code: 301
 
 
-21/03/2022 22:42:58
-[ERROR]drive.google.com IP mistmatch: 64.233.165.193 64.233.165.195 - HTTP code: 301
+21/03/2022 23:41:17
+drive.google.com - 64.233.165.193 - HTTP code: 301
+[ERROR]mail.google.com IP mistmatch: 142.251.1.19 142.251.1.17 - HTTP code: 301
+[ERROR]google.com IP mistmatch: 173.194.221.100 173.194.221.113 - HTTP code: 301
+
+23:41:17 with vagrant in ~/netology/0402 at vagrant took 10s
+➜
 ```
 
 ![4](img/img004.png)

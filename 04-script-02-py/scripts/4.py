@@ -11,6 +11,7 @@ timeout = "10"
 hosts = ['drive.google.com','mail.google.com','google.com']
 hosts_ip =['','','']
 first = True
+error = False
 while True:
     now = datetime.now()
     print('\n')
@@ -25,10 +26,12 @@ while True:
                 print('\033[32m' + host + ' - ' + now_ip + ' - HTTP code: ' + code)
             else:
                 print('\033[31m[ERROR]' + host + ' IP mistmatch: ' + hosts_ip[index] + ' ' + now_ip + ' - HTTP code: ' + code)
-                sys.exit(0)
+                error = True
         else:
             print('\033[32m' + host + ' - ' + now_ip + ' - HTTP code: ' + code)
         hosts_ip[index] = now_ip
+    if error:
+        sys.exit(0)
     first = False
     time.sleep(5)
     
