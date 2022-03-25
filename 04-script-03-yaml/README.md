@@ -36,6 +36,7 @@
 ```python
 #!/usr/bin/env python3
 
+import os
 import sys
 from subprocess import PIPE, Popen
 import socket
@@ -64,8 +65,29 @@ def update_files(hosts_l):
         hosts_yaml.write(yaml.dump(hosts_l))
     return
 
-update_files(update_hosts(hosts))
-now_hosts = update_hosts(hosts)
+#чтение из json файла
+def load_file(hosts_l):
+    if os.path.exists("hosts.json"):
+        print("Read from file:")
+        with open('hosts.json', 'r') as hosts_json:
+            try:
+                tmp_hosts = json.loads(hosts_json.read())
+            except ValueError as err:
+                print(err)
+            for tmp_host in tmp_hosts:
+                hosts_l[tmp_host] = tmp_hosts[tmp_host]
+                print(tmp_host + " >>> " + hosts_l[tmp_host])
+        return True
+    else:
+        return False
+
+if load_file(hosts):
+    now_hosts = hosts
+    pass
+else:
+    print("No json file")
+    update_files(update_hosts(hosts))
+    now_hosts = update_hosts(hosts)
 error = False
 
 while True:
