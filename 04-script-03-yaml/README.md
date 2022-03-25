@@ -44,17 +44,19 @@ from datetime import datetime
 import json
 import yaml
 
-port = "80"
-timeout = "10"
+port = "80" #порт который слушаем
+timeout = "10" #таймаут подключения
 
-hosts = {'drive.google.com':'','mail.google.com':'','google.com':''}
+hosts = {'drive.google.com':'','mail.google.com':'','google.com':''} #словарь "доменное имя" - "ip"
 
+#функция заполнения словаря
 def update_hosts(hosts_l):
     for host in hosts_l:
         ip = socket.gethostbyname(host)
         hosts_l[host] = ip
     return hosts_l
 
+#функция обновления yaml и json
 def update_files(hosts_l):
     with open('hosts.json', 'w') as hosts_json:
         hosts_json.write(str(json.dumps(hosts_l)))
@@ -71,18 +73,19 @@ while True:
     print('\n')
     print('\033[37m' + now.strftime("%d/%m/%Y %H:%M:%S"))
     for index, host in enumerate(now_hosts):
+        #подключаемся curl по ip и получаем ответ сервера
         req = Popen('curl --write-out \'%{http_code}\' --silent --output /dev/null --connect-timeout ' + timeout + ' http://' + host + ':' + port, shell=True, stdout=PIPE, stderr=PIPE)
         stdout, stderr = req.communicate()
         code = stdout.decode()
-        now_ip = socket.gethostbyname(host)
+        now_ip = socket.gethostbyname(host) #получаем текущий ip сервера
         if now_ip.find(now_hosts[host]) != -1:
             print('\033[32m' + host + ' - ' + now_ip + ' - HTTP code: ' + code)
         else:
-            print('\033[31m[ERROR]' + host + ' IP mistmatch: ' + now_hosts[host] + ' ' + now_ip + ' - HTTP code: ' + code)
+            print('\033[31m[ERROR]' + host + ' IP mistmatch: ' + now_hosts[host] + ' >>> ' + now_ip + ' - HTTP code: ' + code)
             error = True
 
         now_hosts[host] = now_ip
-    if error:
+    if error: #если ip сменился, записываем текущие ip в yaml и json, прерываем выполнение скрипта, но только после опроса всех 3х серверов
         update_files(now_hosts)
         sys.exit(0)
     time.sleep(5)
@@ -90,29 +93,28 @@ while True:
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-
-23:54:08 with vagrant in ~/netology/0403 at vagrant
+20:13:02 with vagrant in ~/netology/0403 at vagrant
 ➜ python3 1.py
 
 
-21/03/2022 23:54:13
+25/03/2022 20:13:05
 drive.google.com - 64.233.165.193 - HTTP code: 301
-mail.google.com - 142.251.1.18 - HTTP code: 301
-google.com - 173.194.221.138 - HTTP code: 301
+mail.google.com - 142.251.1.17 - HTTP code: 301
+google.com - 173.194.73.101 - HTTP code: 301
 
 
-21/03/2022 23:54:18
+25/03/2022 20:13:10
 drive.google.com - 64.233.165.193 - HTTP code: 301
-mail.google.com - 142.251.1.18 - HTTP code: 301
-google.com - 173.194.221.138 - HTTP code: 301
+mail.google.com - 142.251.1.17 - HTTP code: 301
+google.com - 173.194.73.101 - HTTP code: 301
 
 
-21/03/2022 23:54:24
+25/03/2022 20:13:16
 drive.google.com - 64.233.165.193 - HTTP code: 301
-[ERROR]mail.google.com IP mistmatch: 142.251.1.18 142.251.1.17 - HTTP code: 301
-[ERROR]google.com IP mistmatch: 173.194.221.138 173.194.221.102 - HTTP code: 301
+[ERROR]mail.google.com IP mistmatch: 142.251.1.17 >>> 142.251.1.19 - HTTP code: 301
+[ERROR]google.com IP mistmatch: 173.194.73.101 >>> 173.194.73.102 - HTTP code: 301
 
-23:54:24 with vagrant in ~/netology/0403 at vagrant took 11s
+20:13:16 with vagrant in ~/netology/0403 at vagrant took 11s
 ➜
 ```
 

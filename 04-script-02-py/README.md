@@ -240,61 +240,65 @@ from subprocess import PIPE, Popen
 import socket
 import time
 from datetime import datetime
-port = "80"
-timeout = "10"
 
-hosts = ['drive.google.com','mail.google.com','google.com']
-hosts_ip =['','','']
-first = True
+port = "80" #порт который слушаем
+timeout = "10" #таймаут подключения
+
+hosts = {'drive.google.com':'','mail.google.com':'','google.com':''} #словарь "доменное имя" - "ip"
+
+#функция заполнения словаря
+def update_hosts(hosts_l):
+    for host in hosts_l:
+        ip = socket.gethostbyname(host)
+        hosts_l[host] = ip
+    return hosts_l
+
+now_hosts = update_hosts(hosts)
+
 error = False
+
 while True:
     now = datetime.now()
     print('\n')
     print('\033[37m' + now.strftime("%d/%m/%Y %H:%M:%S"))
-    for index, host in enumerate(hosts):
+    for index, host in enumerate(now_hosts):
+        #подключаемся curl по ip и получаем ответ сервера
         req = Popen('curl --write-out \'%{http_code}\' --silent --output /dev/null --connect-timeout ' + timeout + ' http://' + host + ':' + port, shell=True, stdout=PIPE, stderr=PIPE)
         stdout, stderr = req.communicate()
         code = stdout.decode()
-        now_ip = socket.gethostbyname(host)
-        if not first:
-            if now_ip.find(hosts_ip[index]) != -1:
-                print('\033[32m' + host + ' - ' + now_ip + ' - HTTP code: ' + code)
-            else:
-                print('\033[31m[ERROR]' + host + ' IP mistmatch: ' + hosts_ip[index] + ' ' + now_ip + ' - HTTP code: ' + code)
-                error = True
-        else:
+
+        now_ip = socket.gethostbyname(host) #получаем текущий ip сервера
+        if now_ip.find(now_hosts[host]) != -1:
             print('\033[32m' + host + ' - ' + now_ip + ' - HTTP code: ' + code)
-        hosts_ip[index] = now_ip
-    if error:
+        else:
+            print('\033[31m[ERROR]' + host + ' IP mistmatch: ' + now_hosts[host] + ' >>> ' + now_ip + ' - HTTP code: ' + code)
+            error = True
+
+        now_hosts[host] = now_ip
+    if error: #если ip сменился, прерываем выполнение скрипта, то только после опроса всех 3х серверов
         sys.exit(0)
-    first = False
     time.sleep(5)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```bash
-23:41:04 with vagrant in ~/netology/0402 at vagrant
+
+20:11:11 with vagrant in ~/netology/0402 at vagrant
 ➜ python3 4.py
 
 
-21/03/2022 23:41:07
+25/03/2022 20:11:13
 drive.google.com - 64.233.165.193 - HTTP code: 301
-mail.google.com - 142.251.1.19 - HTTP code: 301
-google.com - 173.194.221.100 - HTTP code: 301
+mail.google.com - 64.233.164.83 - HTTP code: 301
+google.com - 173.194.73.100 - HTTP code: 301
 
 
-21/03/2022 23:41:12
+25/03/2022 20:11:18
 drive.google.com - 64.233.165.193 - HTTP code: 301
-mail.google.com - 142.251.1.19 - HTTP code: 301
-google.com - 173.194.221.100 - HTTP code: 301
+mail.google.com - 64.233.164.83 - HTTP code: 301
+[ERROR]google.com IP mistmatch: 173.194.73.100 >>> 173.194.73.102 - HTTP code: 301
 
-
-21/03/2022 23:41:17
-drive.google.com - 64.233.165.193 - HTTP code: 301
-[ERROR]mail.google.com IP mistmatch: 142.251.1.19 142.251.1.17 - HTTP code: 301
-[ERROR]google.com IP mistmatch: 173.194.221.100 173.194.221.113 - HTTP code: 301
-
-23:41:17 with vagrant in ~/netology/0402 at vagrant took 10s
+20:11:19 with vagrant in ~/netology/0402 at vagrant took 6s
 ➜
 ```
 
