@@ -628,18 +628,14 @@ Rules updated (v6)
 ➜ sudo ufw allow http
 Rules updated
 Rules updated (v6)
-```
 
-Активируем `ufw`:
-
-```bash
 02:30:34 with vagrant in ~ at vagrant
 ➜ sudo ufw allow https
 Rules updated
 Rules updated (v6)
 ```
 
-Нас предупреждают что ssh соединение порвется:
+Активируем `ufw`, нас предупреждают что ssh соединение порвется:
 
 ```bash
 02:30:36 with vagrant in ~ at vagrant

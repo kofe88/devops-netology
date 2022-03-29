@@ -74,6 +74,7 @@ def load_file(hosts_l):
                 tmp_hosts = json.loads(hosts_json.read())
             except ValueError as err:
                 print(err)
+                return False
             for tmp_host in tmp_hosts:
                 hosts_l[tmp_host] = tmp_hosts[tmp_host]
                 print(tmp_host + " >>> " + hosts_l[tmp_host])
