@@ -1,0 +1,11 @@
+# ------------------------------------ Node ------------------------------------
+node.name: netology_test
+node.roles: [ master, data ]
+#
+# ---------------------------------- Network -----------------------------------
+network.host: 0.0.0.0
+http.port: 9200
+# ----------------------------------- Paths ------------------------------------
+path.data: /var/lib/data/elasticsearch
+path.logs: /var/lib/logs/elasticsearch
+path.repo: /elasticsearch/snapshots
