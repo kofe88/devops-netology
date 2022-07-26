@@ -44,7 +44,7 @@ secret: YCMC****
 
 Правим [version.tf](scripts/cloud-terraform/version.tf) и добавляем конфиг для бакета.
 
-```json
+```bash
 terraform {
   required_providers {
     yandex = {
@@ -243,7 +243,7 @@ commands will detect it and remind you to do so if necessary.
 
 Прописываем для `count`
 
-```json
+```bash
 resource "yandex_compute_instance" "node01" {
 
   platform_id = local.platform_type[terraform.workspace]
@@ -283,7 +283,7 @@ resource "yandex_compute_instance" "node01" {
 
 Прописываем для `for_each`
 
-```json
+```bash
 resource "yandex_compute_instance" "node02" {
 
   for_each = {for index, vm in local.prod: index => vm
@@ -327,7 +327,7 @@ resource "yandex_compute_instance" "node02" {
 
 [network.tf](scripts/cloud-terraform/network.tf)
 
-```json
+```bash
 resource "yandex_vpc_network" "default" {
   name = "net-${terraform.workspace}"
 }
@@ -344,7 +344,7 @@ resource "yandex_vpc_subnet" "default" {
 
 Для использования с `count`
 
-```json
+```bash
 locals {
   platform_type = {
        stage = "standard-v1"
@@ -359,7 +359,7 @@ locals {
 
 Для использования с `for_each`
 
-```json
+```bash
 locals {
   prod = [
     {
@@ -384,7 +384,7 @@ locals {
 
 Так же подправляем конфиг [output.tf](scripts/cloud-terraform/output.tf) для корректного вывода информации
 
-```json
+```bash
 output "internal_ip_address_node01_yandex_cloud" {
   value = "${yandex_compute_instance.node01.*.network_interface.0.ip_address}"
 }
