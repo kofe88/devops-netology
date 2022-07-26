@@ -1,0 +1,27 @@
+{
+  "builders": [
+    {
+      "disk_type": "network-nvme",
+      "folder_id": "b1g7sa087ssu373i3ubo",
+      "image_description": "by packer",
+      "image_family": "ubuntu",
+      "image_name": "ubuntu-2004-base",
+      "source_image_family": "ubuntu-2004-lts",
+      "ssh_username": "ubuntu",
+      "subnet_id": "e9btb3hv94sbkgrkshm0",
+      "type": "yandex",
+      "use_ipv4_nat": true,
+      "zone": "ru-central1-a"
+    }
+  ],
+  "provisioners": [
+    {
+      "inline": [
+        "sudo apt -y update",
+        "sudo apt -y install bridge-utils bind9-utils iptables curl net-tools tcpdump rsync telnet openssh-server wget"
+      ],
+      "type": "shell"
+    }
+  ]
+}
+
