@@ -1,5 +1,9 @@
 ---
-clickhouse:
+elasticsearch:
   hosts:
-    clickhouse-01:
-      ansible_host: <IP_here>
+    elasticsearch:
+      ansible_connection: docker      
+kibana:
+  hosts:
+    kibana:
+      ansible_connection: docker
