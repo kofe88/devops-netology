@@ -104,10 +104,11 @@ site.yml
       register: get_kibana
       until: get_kibana is succeeded
       tags: kibana
-    - name: Create directrory for Kibana 
+    - name: Create directrory for Kibana
       file:
         state: directory
         path: "{{ kibana_home }}"
+        mode: 0755
       tags: kibana
     - name: Extract Kibana in the installation directory
       become: true
@@ -117,6 +118,7 @@ site.yml
         dest: "{{ kibana_home }}"
         extra_opts: [--strip-components=1]
         creates: "{{ kibana_home }}/bin/kibana"
+        mode: 0755
       tags:
         - kibana
     - name: Set environment Kibana
@@ -124,9 +126,8 @@ site.yml
       template:
         src: templates/kib.sh.j2
         dest: /etc/profile.d/kib.sh
+        mode: 0755
       tags: kibana
-
-
 ```
 
 kib.sh.j2
