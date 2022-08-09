@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  elasticsearch:
+    image: pycontribs/ubuntu
+    container_name: elasticsearch
+    entrypoint: "tail -f /dev/null"
+
+  kibana:
+    image: pycontribs/ubuntu
+    container_name: kibana
+    entrypoint: "tail -f /dev/null"
