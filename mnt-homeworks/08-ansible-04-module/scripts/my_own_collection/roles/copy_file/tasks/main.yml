@@ -1,0 +1,10 @@
+---
+# tasks file for copy_file
+  - name: run the new module
+    copy_file:
+      path: '/tmp/file_2.txt'
+      content: 'Hi again'
+    register: testout
+  - name: dump test output
+    debug:
+      msg: '{{ testout }}'

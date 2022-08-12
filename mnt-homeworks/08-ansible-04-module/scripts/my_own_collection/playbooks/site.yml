@@ -1,0 +1,4 @@
+- name: Run copy_file
+  hosts: localhost
+  roles:
+    - copy_file

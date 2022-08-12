@@ -1,0 +1,4 @@
+---
+# defaults file for copy_file
+path: "/tmp/file.txt"
+content: "Hi Netology!"
